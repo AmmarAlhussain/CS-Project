@@ -50,7 +50,7 @@ function display(h2, result) {
     document.querySelector("body").appendChild(container)
 }
 
-textarea = document.querySelector("textarea")
+textarea = document.querySelector("form  textarea")
 textarea.addEventListener("keypress", e => {
     if (!((e.key >= 'A' && e.key <= 'Z') || e.key === ' ')) {
         e.preventDefault()
@@ -119,6 +119,7 @@ change.addEventListener("click", () => {
 
 button = document.querySelector("button")
 button.addEventListener("click", e => {
+    textarea = document.querySelector("form  textarea")
     e.preventDefault()
     h2 = document.querySelector("h2").textContent
     if (textarea.value.trim() == "") {
