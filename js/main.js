@@ -132,9 +132,9 @@ button.addEventListener("click", e => {
         b.style = "border:3px solid red"
     }
     if (h2 == "Encrypt" && textarea.value.trim() != "" && flaga && flagb) {
-        display("ciphertext", encrypt(textarea.value.trim().split(""), parseInt(a.value), parseInt(b.value)))
+        display("ciphertext", encrypt(textarea.value.trim().split(" ").join("").split(""), parseInt(a.value), parseInt(b.value)))
     }
     else if (h2 == "Decrypt" && textarea.value.trim() != "" && flaga && flagb) {
-        display("plaintext", decrypt(textarea.value.trim().split(""), inv(parseInt(a.value)), parseInt(b.value)))
+        display("plaintext", decrypt(textarea.value.trim().split(" ").join("").split(""), inv(parseInt(a.value)), parseInt(b.value)))
     }
 })
