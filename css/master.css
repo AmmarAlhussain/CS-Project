@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    height: 100px;
+}
+
+#Title {
+    text-align: center;
+    margin: 0;
+    line-height: 3;
+}
+
+#container {
+    background-color: #f8f9f8;
+    height: calc(100vh - 150px);
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+form {
+    width: 600px;
+    height: 700px;
+    border-radius: 16px;
+    background-color: white;
+    padding: 30px 20px 20px;
+}
+
+form h2 {
+    margin: 0 0 20px 0;
+    text-align: center;
+}
+
+form div {
+    margin-top: 40px;
+    height: 60px;
+}
+
+form #space {
+    margin-bottom: 100px;
+}
+
+form>div:last-of-type {
+    margin-bottom: 90px;
+}
+
+form label {
+    margin-left: 6px;
+    font-size: 16px;
+    margin-bottom: 3px;
+    display: block;
+    position: relative;
+    font-weight: bold;
+}
+
+textarea {
+    margin-left: 3px;
+    padding: 4px;
+    background-color: #eee;
+    border-radius: 8px;
+    font-weight: bold;
+    resize: none;
+    text-align: center;
+}
+
+form input {
+    padding: 5px 0 5px 0;
+    border-radius: 16px;
+    background-color: #eee;
+    border: solid white 2px;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
+button {
+    margin-top: 30px;
+    text-align: center;
+    border-radius: 20px;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    border: none;
+    background: #000000;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+}
+
+form>p {
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    margin-top: 20px;
+    display: block;
+    cursor: pointer;
+}
+
+footer {
+    display: flex;
+    height: 50px;
+    color: white;
+    text-align: center;
+    background-color: #2a2a2a;
+    justify-content: space-around;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.result {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 30%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.result div {
+    padding: 20px;
+    width: 600px;
+    height: 300px;
+    background-color: #FFF;
+    position: relative;
+}
+
+.result button {
+    width: 20%;
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+}
