@@ -75,6 +75,12 @@ textarea {
     text-align: center;
 }
 
+span {
+    color: red;
+    padding-left: 8px;
+    font-size: 14px;
+}
+
 form input {
     padding: 5px 0 5px 0;
     border-radius: 16px;
