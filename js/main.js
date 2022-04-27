@@ -117,25 +117,37 @@ change.addEventListener("click", () => {
     h2 = document.querySelector("h2")
     label = document.querySelector("label")
     p = document.querySelector("form > p ")
-    textarea = document.querySelector("textarea")
+    textarea = document.querySelector("form textarea")
 
     if (p.textContent == "Go to Decrypt") {
         p.textContent = "Go to Encrypt"
         label.textContent = "ciphertext"
         textarea.placeholder = "Enter the ciphertext"
         textarea.value = ""
+        textarea.style.border = "none"
+        textarea.nextElementSibling.textContent = ""
         h2.textContent = "Decrypt"
         a.value = ""
+        a.style.border = "none"
+        a.nextElementSibling.textContent = ""
         b.value = ""
+        b.style.border = "none"
+        b.nextElementSibling.textContent = ""
     }
     else {
         p.textContent = "Go to Decrypt"
         label.textContent = "plaintext"
         textarea.placeholder = "Enter the plaintext"
-        h2.textContent = "Encrypt"
+        textarea.style.border = "none"
+        textarea.nextElementSibling.textContent = ""
         textarea.value = ""
+        h2.textContent = "Encrypt"
         a.value = ""
+        a.style.border = "none"
+        a.nextElementSibling.textContent = ""
         b.value = ""
+        b.style.border = "none"
+        b.nextElementSibling.textContent = ""
     }
 })
 
