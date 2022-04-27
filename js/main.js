@@ -57,36 +57,58 @@ textarea.addEventListener("keypress", e => {
     }
 })
 
+textarea.addEventListener("paste", e => { e.preventDefault() })
+
 textarea.addEventListener("blur", () => {
+    h2 = document.querySelector("h2").textContent
+    span = document.querySelector("Form Textarea").nextElementSibling
     if (textarea.value.trim() == "") {
         textarea.style = "border:3px solid red"
+        if (h2 == "Encrypt") {
+            span.textContent = "Plaintext is empty"
+        }
+        else {
+            span.textContent = "Ciphertext is empty"
+        }
     }
     else {
         textarea.style = "border:3px solid green"
+        span.textContent = ""
     }
 })
 
 a = document.querySelector("input")
 b = document.querySelectorAll("input")[1]
 a.addEventListener("blur", () => {
+    span = document.querySelectorAll("input")[0].nextElementSibling
     if (inv(a.value) != -1) {
         a.style = "border:3px solid green"
         flaga = true
+        span.textContent = ""
     }
     else {
         a.style = "border:3px solid red"
         flaga = false
+        if (a.value == "") {
+            span.textContent = "Choose number"
+        }
+        else {
+            span.textContent = "There no inverse for that number"
+        }
     }
 })
 
 b.addEventListener("blur", () => {
+    span = document.querySelectorAll("input")[1].nextElementSibling
     if (b.value != "") {
         b.style = "border:3px solid green"
         flagb = true
+        span.textContent = ""
     }
     else {
         b.style = "border:3px solid red"
         flagb = false
+        span.textContent = "Choose Number"
     }
 })
 
@@ -124,12 +146,18 @@ button.addEventListener("click", e => {
     h2 = document.querySelector("h2").textContent
     if (textarea.value.trim() == "") {
         textarea.style = "border:3px solid red"
+        textarea.focus()
+        textarea.blur()
     }
     if (!flaga) {
         a.style = "border:3px solid red"
+        a.focus()
+        a.blur()
     }
     if (!flagb) {
         b.style = "border:3px solid red"
+        b.focus()
+        b.blur()
     }
     if (h2 == "Encrypt" && textarea.value.trim() != "" && flaga && flagb) {
         display("ciphertext", encrypt(textarea.value.trim().split(" ").join("").split(""), parseInt(a.value), parseInt(b.value)))
