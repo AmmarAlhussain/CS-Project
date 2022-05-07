@@ -2,9 +2,6 @@ flagplaintext = false
 flaga = false
 flagb = false
 function encrypt(plaintext, a, b) {
-    while (b < 0) {
-        b = 26 + b
-    }
     for (i = 0; i < plaintext.length; i++) {
         plaintext[i] = ((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26
         while (plaintext[i] < 0) {
@@ -17,9 +14,6 @@ function encrypt(plaintext, a, b) {
 }
 
 function decrypt(ciphertext, inv, b) {
-    while (b < 0) {
-        b = 26 + b
-    }
     for (i = 0; i < ciphertext.length; i++) {
         ciphertext[i] = (inv * ((ciphertext[i].charCodeAt(0) - 65) - b)) % 26
         while (ciphertext[i] < 0) {
