@@ -1,10 +1,11 @@
+flagplaintext = false
 flaga = false
 flagb = false
 function encrypt(plaintext, a, b) {
     for (i = 0; i < plaintext.length; i++) {
         plaintext[i] = String.fromCharCode((((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26) + 65)
     }
-    return plaintext.join("").replaceAll(" ", "").toUpperCase()
+    return plaintext.join("").toUpperCase()
 }
 
 function decrypt(ciphertext, inv, b) {
@@ -15,7 +16,7 @@ function decrypt(ciphertext, inv, b) {
         }
         ciphertext[i] = String.fromCharCode(ciphertext[i] + 65)
     }
-    return ciphertext.join("").replaceAll(" ", "").toUpperCase()
+    return ciphertext.join("").toUpperCase()
 }
 
 function inv(a) {
@@ -51,14 +52,6 @@ function display(h2, result) {
 }
 
 textarea = document.querySelector("form  textarea")
-textarea.addEventListener("keypress", e => {
-    if (!((e.key >= 'A' && e.key <= 'Z') || e.key === ' ')) {
-        e.preventDefault()
-    }
-})
-
-textarea.addEventListener("paste", e => { e.preventDefault() })
-
 textarea.addEventListener("blur", () => {
     h2 = document.querySelector("h2").textContent
     span = document.querySelector("Form Textarea").nextElementSibling
@@ -72,9 +65,28 @@ textarea.addEventListener("blur", () => {
         }
     }
     else {
-        textarea.style = "border:3px solid green"
-        span.textContent = ""
+        for (i = 0; i < textarea.value.trim().length; i++) {
+            console.log(textarea.value.trim()[i])
+            if ((textarea.value.trim()[i] >= 'A' && textarea.value.trim()[i] <= 'Z') || textarea.value.trim()[i] === ' ') {
+                flagplaintext = true
+                textarea.style = "border:3px solid green"
+                span.textContent = ""
+            }
+            else {
+                textarea.style = "border:3px solid red"
+                if (h2 == "Encrypt") {
+                    span.textContent = "Plaintext is invalid"
+                }   
+                else {
+                    span.textContent = "Ciphertext is invalid"
+                }
+                flagplaintext = false
+                break
+            }
+        }
+
     }
+
 })
 
 a = document.querySelector("input")
@@ -172,9 +184,9 @@ button.addEventListener("click", e => {
         b.blur()
     }
     if (h2 == "Encrypt" && textarea.value.trim() != "" && flaga && flagb) {
-        display("ciphertext", encrypt(textarea.value.trim().split(" ").join("").split(""), parseInt(a.value), parseInt(b.value)))
+        display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").split(""), parseInt(a.value), parseInt(b.value)))
     }
     else if (h2 == "Decrypt" && textarea.value.trim() != "" && flaga && flagb) {
-        display("plaintext", decrypt(textarea.value.trim().split(" ").join("").split(""), inv(parseInt(a.value)), parseInt(b.value)))
+        display("plaintext", decrypt(textarea.value.trim().replaceAll(" ", "").split(""), inv(parseInt(a.value)), parseInt(b.value)))
     }
 })
