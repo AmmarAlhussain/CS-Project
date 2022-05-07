@@ -6,14 +6,22 @@ function encrypt(plaintext, a, b) {
         b = 26 + b
     }
     for (i = 0; i < plaintext.length; i++) {
-        plaintext[i] = String.fromCharCode((((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26) + 65)
+        plaintext[i] = ((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26
+        while (plaintext[i] < 0) {
+            plaintext[i] = 26 + plaintext[i]
+        }
+
+        plaintext[i] = String.fromCharCode(plaintext[i] + 65)
     }
     return plaintext.join("")
 }
 
 function decrypt(ciphertext, inv, b) {
+    while (b < 0) {
+        b = 26 + b
+    }
     for (i = 0; i < ciphertext.length; i++) {
-        ciphertext[i] = inv * ((ciphertext[i].charCodeAt(0) - 65) - b) % 26
+        ciphertext[i] = (inv * ((ciphertext[i].charCodeAt(0) - 65) - b)) % 26
         while (ciphertext[i] < 0) {
             ciphertext[i] = 26 + ciphertext[i]
         }
@@ -78,18 +86,16 @@ textarea.addEventListener("blur", () => {
             else {
                 textarea.style = "border:3px solid red"
                 if (h2 == "Encrypt") {
-                    span.textContent = "Plaintext is invalid"
+                    span.textContent = "Plaintext should contain Capital letters and space only"
                 }
                 else {
-                    span.textContent = "Ciphertext is invalid"
+                    span.textContent = "Plaintext should contain Capital letters and space only"
                 }
                 flagplaintext = false
                 break
             }
         }
-
     }
-
 })
 
 a = document.querySelector("input")
@@ -172,17 +178,14 @@ button.addEventListener("click", e => {
     e.preventDefault()
     h2 = document.querySelector("h2").textContent
     if (!flagplaintext) {
-        textarea.style = "border:3px solid red"
         textarea.focus()
         textarea.blur()
     }
     if (!flaga) {
-        a.style = "border:3px solid red"
         a.focus()
         a.blur()
     }
     if (!flagb) {
-        b.style = "border:3px solid red"
         b.focus()
         b.blur()
     }
