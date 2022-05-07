@@ -5,7 +5,7 @@ function encrypt(plaintext, a, b) {
     for (i = 0; i < plaintext.length; i++) {
         plaintext[i] = String.fromCharCode((((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26) + 65)
     }
-    return plaintext.join("").toUpperCase()
+    return plaintext.join("")
 }
 
 function decrypt(ciphertext, inv, b) {
@@ -16,7 +16,7 @@ function decrypt(ciphertext, inv, b) {
         }
         ciphertext[i] = String.fromCharCode(ciphertext[i] + 65)
     }
-    return ciphertext.join("").toUpperCase()
+    return ciphertext.join("")
 }
 
 function inv(a) {
@@ -56,6 +56,7 @@ textarea.addEventListener("blur", () => {
     h2 = document.querySelector("h2").textContent
     span = document.querySelector("Form Textarea").nextElementSibling
     if (textarea.value.trim() == "") {
+        flagplaintext = false
         textarea.style = "border:3px solid red"
         if (h2 == "Encrypt") {
             span.textContent = "Plaintext is empty"
@@ -66,7 +67,6 @@ textarea.addEventListener("blur", () => {
     }
     else {
         for (i = 0; i < textarea.value.trim().length; i++) {
-            console.log(textarea.value.trim()[i])
             if ((textarea.value.trim()[i] >= 'A' && textarea.value.trim()[i] <= 'Z') || textarea.value.trim()[i] === ' ') {
                 flagplaintext = true
                 textarea.style = "border:3px solid green"
@@ -76,7 +76,7 @@ textarea.addEventListener("blur", () => {
                 textarea.style = "border:3px solid red"
                 if (h2 == "Encrypt") {
                     span.textContent = "Plaintext is invalid"
-                }   
+                }
                 else {
                     span.textContent = "Ciphertext is invalid"
                 }
@@ -112,7 +112,7 @@ a.addEventListener("blur", () => {
 
 b.addEventListener("blur", () => {
     span = document.querySelectorAll("input")[1].nextElementSibling
-    if (b.value != "") {
+    if (b.value != "" && b.value >= 1) {
         b.style = "border:3px solid green"
         flagb = true
         span.textContent = ""
@@ -120,7 +120,12 @@ b.addEventListener("blur", () => {
     else {
         b.style = "border:3px solid red"
         flagb = false
-        span.textContent = "Choose Number"
+        if (b.value == "") {
+            span.textContent = "Choose Number"
+        }
+        else {
+            span.textContent = "Greater than zero"
+        }
     }
 })
 
@@ -168,7 +173,7 @@ button.addEventListener("click", e => {
     textarea = document.querySelector("form  textarea")
     e.preventDefault()
     h2 = document.querySelector("h2").textContent
-    if (textarea.value.trim() == "") {
+    if (!flagplaintext) {
         textarea.style = "border:3px solid red"
         textarea.focus()
         textarea.blur()
@@ -183,10 +188,10 @@ button.addEventListener("click", e => {
         b.focus()
         b.blur()
     }
-    if (h2 == "Encrypt" && textarea.value.trim() != "" && flaga && flagb) {
+    if (h2 == "Encrypt" && flagplaintext && flaga && flagb) {
         display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").split(""), parseInt(a.value), parseInt(b.value)))
     }
-    else if (h2 == "Decrypt" && textarea.value.trim() != "" && flaga && flagb) {
+    else if (h2 == "Decrypt" && flagplaintext && flaga && flagb) {
         display("plaintext", decrypt(textarea.value.trim().replaceAll(" ", "").split(""), inv(parseInt(a.value)), parseInt(b.value)))
     }
 })
