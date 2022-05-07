@@ -187,7 +187,6 @@ button.addEventListener("click", e => {
         b.blur()
     }
     if (h2 == "Encrypt" && flagplaintext && flaga && flagb) {
-        console.log(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""))
         display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""), parseInt(a.value), parseInt(b.value)))
     }
     else if (h2 == "Decrypt" && flagplaintext && flaga && flagb) {
