@@ -2,6 +2,9 @@ flagplaintext = false
 flaga = false
 flagb = false
 function encrypt(plaintext, a, b) {
+    while (b < 0) {
+        b = 26 + b
+    }
     for (i = 0; i < plaintext.length; i++) {
         plaintext[i] = String.fromCharCode((((a * (plaintext[i].charCodeAt(0) - 65)) + b) % 26) + 65)
     }
@@ -55,7 +58,7 @@ textarea = document.querySelector("form  textarea")
 textarea.addEventListener("blur", () => {
     h2 = document.querySelector("h2").textContent
     span = document.querySelector("Form Textarea").nextElementSibling
-    if (textarea.value.trim() == "") {
+    if (textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "") == "") {
         flagplaintext = false
         textarea.style = "border:3px solid red"
         if (h2 == "Encrypt") {
@@ -66,8 +69,8 @@ textarea.addEventListener("blur", () => {
         }
     }
     else {
-        for (i = 0; i < textarea.value.trim().length; i++) {
-            if ((textarea.value.trim()[i] >= 'A' && textarea.value.trim()[i] <= 'Z') || textarea.value.trim()[i] === ' ') {
+        for (i = 0; i < textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").length; i++) {
+            if ((textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] >= 'A' && textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] <= 'Z') || textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] === ' ') {
                 flagplaintext = true
                 textarea.style = "border:3px solid green"
                 span.textContent = ""
@@ -112,20 +115,15 @@ a.addEventListener("blur", () => {
 
 b.addEventListener("blur", () => {
     span = document.querySelectorAll("input")[1].nextElementSibling
-    if (b.value != "" && b.value >= 1) {
+    if (b.value != "") {
         b.style = "border:3px solid green"
         flagb = true
         span.textContent = ""
     }
     else {
         b.style = "border:3px solid red"
+        span.textContent = "Choose Number"
         flagb = false
-        if (b.value == "") {
-            span.textContent = "Choose Number"
-        }
-        else {
-            span.textContent = "Greater than zero"
-        }
     }
 })
 
@@ -189,9 +187,10 @@ button.addEventListener("click", e => {
         b.blur()
     }
     if (h2 == "Encrypt" && flagplaintext && flaga && flagb) {
-        display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").split(""), parseInt(a.value), parseInt(b.value)))
+        console.log(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""))
+        display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""), parseInt(a.value), parseInt(b.value)))
     }
     else if (h2 == "Decrypt" && flagplaintext && flaga && flagb) {
-        display("plaintext", decrypt(textarea.value.trim().replaceAll(" ", "").split(""), inv(parseInt(a.value)), parseInt(b.value)))
+        display("plaintext", decrypt(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""), inv(parseInt(a.value)), parseInt(b.value)))
     }
 })
