@@ -60,7 +60,8 @@ textarea = document.querySelector("form  textarea")
 textarea.addEventListener("blur", () => {
     h2 = document.querySelector("h2").textContent
     span = document.querySelector("Form Textarea").nextElementSibling
-    if (textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "") == "") {
+    message = textarea.value.replaceAll(" ", "").replaceAll("\n", "")
+    if (message == "") {
         flagplaintext = false
         textarea.style = "border:3px solid red"
         if (h2 == "Encrypt") {
@@ -71,8 +72,8 @@ textarea.addEventListener("blur", () => {
         }
     }
     else {
-        for (i = 0; i < textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").length; i++) {
-            if ((textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] >= 'A' && textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] <= 'Z') || textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "")[i] === ' ') {
+        for (i = 0; i < message.length; i++) {
+            if ((message[i] >= 'A' && message[i] <= 'Z') || message[i] === ' ') {
                 flagplaintext = true
                 textarea.style = "border:3px solid green"
                 span.textContent = ""
@@ -113,6 +114,9 @@ a.addEventListener("blur", () => {
     }
 })
 
+a.addEventListener("keypress", e => { if (e.key === '.') e.preventDefault(); })
+a.addEventListener("paste", e => { e.preventDefault(); })
+
 b.addEventListener("blur", () => {
     span = document.querySelectorAll("input")[1].nextElementSibling
     if (b.value != "") {
@@ -127,6 +131,9 @@ b.addEventListener("blur", () => {
     }
 })
 
+b.addEventListener("keypress", e => { if (e.key === '.') e.preventDefault(); })
+b.addEventListener("paste", e => { e.preventDefault(); })
+
 change = document.querySelector("form > p ")
 change.addEventListener("click", () => {
     h2 = document.querySelector("h2")
@@ -139,30 +146,30 @@ change.addEventListener("click", () => {
         label.textContent = "ciphertext"
         textarea.placeholder = "Enter the ciphertext"
         textarea.value = ""
-        textarea.style.border = "none"
-        textarea.nextElementSibling.textContent = ""
-        h2.textContent = "Decrypt"
         a.value = ""
-        a.style.border = "none"
-        a.nextElementSibling.textContent = ""
         b.value = ""
-        b.style.border = "none"
+        textarea.nextElementSibling.textContent = ""
+        a.nextElementSibling.textContent = ""
         b.nextElementSibling.textContent = ""
+        textarea.style.border = "none"
+        a.style.border = "none"
+        b.style.border = "none"
+        h2.textContent = "Decrypt"
     }
     else {
         p.textContent = "Go to Decrypt"
         label.textContent = "plaintext"
         textarea.placeholder = "Enter the plaintext"
-        textarea.style.border = "none"
-        textarea.nextElementSibling.textContent = ""
         textarea.value = ""
-        h2.textContent = "Encrypt"
         a.value = ""
-        a.style.border = "none"
-        a.nextElementSibling.textContent = ""
         b.value = ""
-        b.style.border = "none"
+        textarea.nextElementSibling.textContent = ""
+        a.nextElementSibling.textContent = ""
         b.nextElementSibling.textContent = ""
+        textarea.style.border = "none"
+        a.style.border = "none"
+        b.style.border = "none"
+        h2.textContent = "Encrypt"
     }
 })
 
@@ -171,22 +178,17 @@ button.addEventListener("click", e => {
     textarea = document.querySelector("form  textarea")
     e.preventDefault()
     h2 = document.querySelector("h2").textContent
-    if (!flagplaintext) {
-        textarea.focus()
-        textarea.blur()
-    }
-    if (!flaga) {
-        a.focus()
-        a.blur()
-    }
-    if (!flagb) {
-        b.focus()
-        b.blur()
-    }
+    msg = textarea.value.replaceAll(" ", "").replaceAll("\n", "").split("")
+    textarea.focus()
+    textarea.blur()
+    a.focus()
+    a.blur()
+    b.focus()
+    b.blur()
     if (h2 == "Encrypt" && flagplaintext && flaga && flagb) {
-        display("ciphertext", encrypt(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""), parseInt(a.value), parseInt(b.value)))
+        display("ciphertext", encrypt(msg, parseInt(a.value), parseInt(b.value)))
     }
     else if (h2 == "Decrypt" && flagplaintext && flaga && flagb) {
-        display("plaintext", decrypt(textarea.value.trim().replaceAll(" ", "").replaceAll("\n", "").split(""), inv(parseInt(a.value)), parseInt(b.value)))
+        display("plaintext", decrypt(msg, inv(parseInt(a.value)), parseInt(b.value)))
     }
 })
